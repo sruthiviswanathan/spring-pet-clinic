@@ -5,6 +5,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>pet-clinic-data-module</module>
+		<module>pet-clinic-web-module</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -54,8 +55,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<goal>install</goal>
+					<checkModificationExcludes>
+						<checkModificationExclude>pom.xml</checkModificationExclude>
+					</checkModificationExcludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 
+	<scm>
+		<developerConnection>scm:git:https://github.com/sruthiviswanathan/spring-pet-clinic.git</developerConnection>
+	</scm>
 </project>
