@@ -30,6 +30,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        // Creating Pet Types
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petTypeService.save(dog);
@@ -37,28 +39,44 @@ public class DataLoader implements CommandLineRunner {
         PetType cat = new PetType();
         cat.setName("Cat");
         PetType savedCatPetType = petTypeService.save(cat);
-
         System.out.println("Loaded petTypes...");
 
+
+        Pet pet1 = new Pet();
+        pet1.setName("Tommy");
+        pet1.setPetType(savedDogPetType);
+        pet1.setBirthDate(LocalDate.ofYearDay(2020, 5));
+        petService.save(pet1);
+
+        Pet pet2 = new Pet();
+        pet2.setName("Kitty");
+        pet2.setPetType(savedCatPetType);
+        pet2.setBirthDate(LocalDate.ofYearDay(2020, 12));
+        petService.save(pet2);
+        System.out.println("Loaded Pets...");
+
+        // Creating Owners
         Owner owner1 = new Owner();
         owner1.setFirstName("Micheal");
         owner1.setLastName("Weston");
+        owner1.setAddress("T Nagar");
+        owner1.setCity("Chennai");
+        owner1.setTelephone("123445");
+        owner1.getPets().add(pet1);
         ownerService.save(owner1);
-
-//        Pet pet1 = new Pet();
-//        pet1.setPetType(savedDogPetType);
-//        pet1.setBirthDate(LocalDate.ofYearDay(2020, 5));
-//        pet1.setOwner(owner1);
-//        petService.save(pet1);
-//        System.out.println("Saved Pet...");
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Micheal");
         owner2.setLastName("North");
+        owner2.setAddress("KK Nagar");
+        owner2.setCity("Chennai");
+        owner2.setTelephone("986445");
+        owner2.getPets().add(pet2);
         ownerService.save(owner2);
+        System.out.println("loaded Owners with Pets....");
 
-        System.out.println("loaded Owners....");
 
+        // Creating Vets
         Vet vet1 = new Vet();
         vet1.setFirstName("Max");
         vet1.setLastName("Axe");
