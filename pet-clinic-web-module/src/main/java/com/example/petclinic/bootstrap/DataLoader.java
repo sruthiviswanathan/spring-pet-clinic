@@ -1,13 +1,7 @@
 package com.example.petclinic.bootstrap;
 
-import com.example.petclinic.model.Owner;
-import com.example.petclinic.model.Pet;
-import com.example.petclinic.model.PetType;
-import com.example.petclinic.model.Vet;
-import com.example.petclinic.services.OwnerService;
-import com.example.petclinic.services.PetService;
-import com.example.petclinic.services.PetTypeService;
-import com.example.petclinic.services.VetService;
+import com.example.petclinic.model.*;
+import com.example.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +14,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final PetService petService;
+    private final SpecialityService specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, PetService petService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, PetService petService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.petService = petService;
+        this.specialityService = specialityService;
     }
 
     @Override
@@ -73,7 +69,20 @@ public class DataLoader implements CommandLineRunner {
         owner2.setTelephone("986445");
         owner2.getPets().add(pet2);
         ownerService.save(owner2);
-        System.out.println("loaded Owners with Pets....");
+        System.out.println("Loaded Owners with Pets....");
+
+
+        //Loading Speciality
+
+        Speciality spl1 = new Speciality();
+        spl1.setDescription("Dogs");
+        specialityService.save(spl1);
+
+        Speciality spl2 = new Speciality();
+        spl2.setDescription("Cats");
+        specialityService.save(spl2);
+
+        System.out.println("Loaded Specialities....");
 
 
         // Creating Vets
