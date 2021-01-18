@@ -1,37 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 <head>
-    <meta charset="UTF-8">
-    <title>List of Owners</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th {
-            font-size: 20px;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-
-        table {
-            background-color: cyan;
-            border-collapse: collapse;
-        }
-
-    </style>
+    <meta charset="UTF-8"/>
 </head>
 <body>
-    <h1 th:text="'List of Owners'">List of Owners...</h1>
-    <table>
+    <h2 th:text="'List of Owners'">Owners</h2>
+    <table id="vets" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>FirstName</th>
-                <th>LastName</th>
+                <th style="width: 100px;">ID</th>
+                <th style="width: 140px;">FirstName</th>
+                <th style="width: 140px;">LastName</th>
             </tr>
         </thead>
         <tbody>
