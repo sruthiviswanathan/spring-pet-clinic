@@ -21,11 +21,6 @@ public class DataLoader implements CommandLineRunner {
         this.ownerService = ownerService;
         this.vetService = vetService;
     }
-    // Without DI
-//    public DataLoader() {
-//        this.ownerService = new OwnerServiceMap();
-//        this.vetService = new VetServiceMap();
-//    }
 
     @Override
     public void run(String... args) throws Exception {
