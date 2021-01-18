@@ -1,5 +1,6 @@
 package com.example.petclinic.services.map;
 
+import com.example.petclinic.model.Speciality;
 import com.example.petclinic.model.Vet;
 import com.example.petclinic.services.SpecialityService;
 import com.example.petclinic.services.VetService;
@@ -37,7 +38,8 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
             if (object.getSpecialities() != null) {
                 object.getSpecialities().forEach(spl -> {
                     if(spl.getId() == null) {
-                       throw new RuntimeException("Speciality must be specified");
+                        Speciality savedSpl = specialityService.save(spl);
+                        spl.setId(savedSpl.getId());
                     }
                 });
             }
