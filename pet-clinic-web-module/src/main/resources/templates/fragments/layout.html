@@ -58,6 +58,11 @@
                       <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                       <span>Veterinarians</span>
                   </li>
+
+                  <li th:replace="::menuItem ('/pets','pets','Pets','th-list','Pets')">
+                      <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                      <span>Pets</span>
+                  </li>
   
                   <li th:replace="::menuItem ('/oops','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">
                       <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>

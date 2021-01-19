@@ -18,6 +18,15 @@ public class Owner extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<Pet>();
 
+    public Owner(String firstName, String lastName, String address, String city, String telephone, Pet pet) {
+        super(firstName, lastName);
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+        this.setPet(pet);
+
+    }
+
     public String getAddress() {
         return address;
     }
@@ -48,5 +57,9 @@ public class Owner extends Person {
 
     public void setPets(Set<Pet> pets) {
         this.pets = pets;
+    }
+
+    public void setPet(Pet pet) {
+        this.pets.add(pet);
     }
 }
