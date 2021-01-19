@@ -60,6 +60,7 @@ public class Owner extends Person {
     }
 
     public void setPet(Pet pet) {
+        pet.setOwner(this);
         this.pets.add(pet);
     }
 }

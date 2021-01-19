@@ -16,7 +16,7 @@
     <tbody>
     <tr th:each="pet: ${pets}">
         <td th:text="${pet.name}"></td>
-        <td th:text="${pet.petType.getDescription()}"></td>
+        <td th:text="${pet.petType}"></td>
         <td th:text="${pet.birthDate}"></td>
     </tr>
     </tbody>

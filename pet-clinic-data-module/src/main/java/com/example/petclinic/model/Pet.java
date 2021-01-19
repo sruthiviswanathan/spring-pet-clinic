@@ -53,7 +53,6 @@ public class Pet extends BaseEntity {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
-        owner.setPet(this);
     }
 
     public LocalDate getBirthDate() {
