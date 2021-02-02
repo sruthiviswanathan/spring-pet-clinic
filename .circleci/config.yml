@@ -4,6 +4,14 @@ orbs:
   maven: circleci/maven@0.0.12
 
 workflows:
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - develop
   maven_test:
     jobs:
       - maven/test # checkout, build, test, and upload test results
