@@ -12,7 +12,7 @@ import com.example.petclinic.model.Owner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import org.springframework.ui.Model;
@@ -71,5 +71,17 @@ class OwnerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("notImplemented"));
         verifyNoInteractions(ownerService);
+    }
+
+    @Test
+    void getOwnerById() throws Exception {
+
+        when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1l).build());
+
+        mockMvc.perform(get("/owners/123"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("owner", hasProperty("id", is(1L))))
+                .andExpect(view().name("owners/ownerDetails"));
+        verify(ownerService, times(1)).findById(anyLong());
     }
 }
