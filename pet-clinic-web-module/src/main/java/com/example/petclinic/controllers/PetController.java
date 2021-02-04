@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Controller
@@ -84,9 +86,9 @@ public class PetController {
     }
 
     @PostMapping("/pets/update/{petId}")
-    public String updateExistingPet(Pet pet, BindingResult result, Owner owner, Model model) {
+    public String updateExistingPet(@PathVariable Long petId, Pet pet, BindingResult result, Owner owner, Model model) {
+        pet.setOwner(owner);
         if (result.hasErrors()) {
-            pet.setOwner(owner);
             model.addAttribute("pet", pet);
             return "/pets/createOrUpdatePet";
         } else {
