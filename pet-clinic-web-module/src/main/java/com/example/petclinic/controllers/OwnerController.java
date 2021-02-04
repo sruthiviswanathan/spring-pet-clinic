@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.petclinic.model.Owner;
@@ -45,7 +42,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{ownerId}")
-    public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+    public ModelAndView showOwner(@PathVariable int ownerId) {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(ownerService.findById(Long.valueOf(ownerId)));
         return mav;
@@ -75,4 +72,40 @@ public class OwnerController {
             return "owners/ownersList";
         }
     }
+
+    @GetMapping("/update/{ownerId}")
+    public ModelAndView renderUpdateOwnerForm(@PathVariable String ownerId) {
+        Owner existingOwner = ownerService.findById(Long.valueOf(ownerId));
+        ModelAndView mav = new ModelAndView("owners/createOrUpdateOwner");
+        mav.addObject("owner", existingOwner);
+        return mav;
+    }
+
+    @PostMapping("/update/{ownerId}")
+    public String saveUpdatedOwner(@ModelAttribute("owner") Owner owner, BindingResult result ,@PathVariable int ownerId) {
+        if(result.hasErrors()) {
+            return "owners/createOrUpdateOwner";
+        } else {
+            owner.setId(Long.valueOf(ownerId));
+            ownerService.save(owner);
+            return "redirect:/owners/" + ownerId;
+        }
+    }
+
+    @GetMapping("/new")
+    public ModelAndView renderCreateOwnerForm() {
+        ModelAndView mav = new ModelAndView("owners/createOrUpdateOwner");
+        mav.addObject("owner", Owner.builder().build());
+        return mav;
+    }
+
+    @PostMapping("/new")
+    public String saveOwner(@ModelAttribute("owner") Owner owner) {
+        Owner savedOwnerObject = ownerService.save(owner);
+        ModelAndView mav = new ModelAndView("owners/ownerDetails");
+        mav.addObject("owner", savedOwnerObject);
+        return "redirect:/owners/" + savedOwnerObject.getId();
+    }
+
+
 }

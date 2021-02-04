@@ -106,4 +106,27 @@ class OwnerControllerTest {
                 .andExpect(view().name("owners/ownerDetails"));
         verify(ownerService, times(1)).findById(anyLong());
     }
+
+    @Test
+    void initUpdateOwnerForm() throws Exception {
+        when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1L).build());
+
+        mockMvc.perform(get("/owners/update/112"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("owner", hasProperty("id", is(1L))))
+                .andExpect(view().name("owners/createOrUpdateOwner"));
+    }
+
+    @Test
+    void initCreateOwnerForm() throws Exception {
+        mockMvc.perform(get("/owners/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/createOrUpdateOwner"))
+                .andExpect(model().attributeExists("owner"));
+    }
+
+    @Test
+    void saveOwnerTest() throws Exception {
+
+    }
 }
