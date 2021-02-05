@@ -9,15 +9,20 @@
     <thead>
     <tr>
         <th style="width: 100px;">ID</th>
-        <th style="width: 140px;">FirstName</th>
-        <th style="width: 140px;">LastName</th>
+        <th style="width: 140px;">Name</th>
+        <th style="width: 140px;">Specialities</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="vet: ${vets}">
         <td th:text="${vet.id}"></td>
-        <td th:text="${vet.firstName}"></td>
-        <td th:text="${vet.lastName}"></td>
+        <td th:text="${vet.firstName + ' ' + vet.lastName}"></td>
+        <td>
+           <span th:each="spl : ${vet.specialities}"
+               th:text="${spl.description + ' '}">
+           </span>
+            <span th:if="${vet?.specialities?.size() == 0}">None</span>
+        </td>
     </tr>
     </tbody>
 </table>
