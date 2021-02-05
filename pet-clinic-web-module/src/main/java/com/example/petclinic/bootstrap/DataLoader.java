@@ -2,10 +2,13 @@ package com.example.petclinic.bootstrap;
 
 import com.example.petclinic.model.*;
 import com.example.petclinic.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -16,6 +19,9 @@ public class DataLoader implements CommandLineRunner {
     private final PetService petService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
+
+    @Autowired
+    private Environment environment;
 
     public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, PetService petService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
@@ -28,9 +34,14 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        int count = petTypeService.findAll().size();
-        if (count == 0) {
-//            loadData();
+
+        String[] activeProfiles = this.environment.getActiveProfiles();;
+        boolean contains = Arrays.stream(activeProfiles).anyMatch("dev"::equals);
+        if(!contains) {
+            int count = petTypeService.findAll().size();
+            if (count == 0) {
+            loadData();
+            }
         }
     }
 
