@@ -9,3 +9,11 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     database: mysql
     show-sql: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            scripts:
+              action: create
+              create-target: pet_clinic_schema.sql
