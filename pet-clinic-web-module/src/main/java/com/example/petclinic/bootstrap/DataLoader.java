@@ -2,6 +2,7 @@ package com.example.petclinic.bootstrap;
 
 import com.example.petclinic.model.*;
 import com.example.petclinic.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component
+@Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
@@ -38,6 +40,8 @@ public class DataLoader implements CommandLineRunner {
         String[] activeProfiles = this.environment.getActiveProfiles();;
         boolean contains = Arrays.stream(activeProfiles).anyMatch("dev"::equals);
         if(!contains) {
+            log.debug("Using H2 Database");
+            log.debug("Loading data");
             int count = petTypeService.findAll().size();
             if (count == 0) {
             loadData();
