@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class VisitController {
     public Visit loadPetWithVisit(@PathVariable("petId") Long petId, Map<String, Object> model) {
         Pet pet = petService.findById(petId);
         model.put("pet", pet);
-        Visit visit = new Visit();
+        Visit visit = Visit.builder().build();
         pet.getVisits().add(visit);
         visit.setPet(pet);
         return visit;
@@ -51,13 +52,16 @@ public class VisitController {
     }
 
     @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
-    public String processNewVisitForm(Visit visit, BindingResult result) {
+    public ModelAndView processNewVisitForm(Visit visit, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
-            return "pets/createOrUpdateVisit";
+            mav.setViewName("pets/createOrUpdateVisit");
+            mav.addObject("error", result.getAllErrors());
         } else {
             visitService.save(visit);
-            return "redirect:/owners/{ownerId}";
+            mav.setViewName("redirect:/owners/{ownerId}");
         }
+        return mav;
     }
 
 }
